@@ -1,0 +1,20 @@
+name: Deploy
+
+on: 
+  push: 
+    branches: 
+      - main
+
+jobs:
+  deploy-laravel: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.3
+        with: 
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSHKEY }}
+          scripts: |
+            "cd /home/ubuntu/devops && ./deploy.sh"
